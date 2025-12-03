@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "fabric-events",
+  "version": "${version}",
+  "name": "Fabric Events",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/fabric-events/icon.png",
+  "environment": "client",
+  "entrypoints": {
+  },
+  "mixins": [
+    "fabric-events.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
