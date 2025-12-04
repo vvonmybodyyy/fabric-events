@@ -3,6 +3,7 @@ package ru.practice;
 import net.minecraft.block.Blocks;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import org.lwjgl.glfw.GLFW;
 import ru.practice.events.EventHandler;
 import ru.practice.events.impl.BlockBreakEvent;
@@ -30,13 +31,13 @@ public class Test {
 
     @EventHandler
     public void onSendPacket(SendPacketEvent event) {
-        if (event.getPacket() instanceof ChatMessageC2SPacket)
-            System.out.println("sended message");
+        if (event.getPacket() instanceof ChatMessageC2SPacket packet)
+            System.out.println("sended message: " + packet.chatMessage());
     }
 
     @EventHandler
     public void onRecievePacket(RecievePacketEvent event) {
-        if (event.getPacket() instanceof ChatMessageS2CPacket packet)
-            System.out.println("recieved message: " + packet.);
+        if (event.getPacket() instanceof GameMessageS2CPacket packet)
+            System.out.println("recieved message: " + packet.content());
     }
 }
