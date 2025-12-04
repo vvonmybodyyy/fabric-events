@@ -8,6 +8,6 @@ import ru.practice.events.Event;
 
 @Getter
 @RequiredArgsConstructor
-public class RecievePacketEvent extends Event {
+public class ReceivePacketEvent extends Event {
     private final Packet<?> packet;
 }

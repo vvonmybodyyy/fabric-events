@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.practice.FabricEvents;
-import ru.practice.events.impl.network.RecievePacketEvent;
+import ru.practice.events.impl.network.ReceivePacketEvent;
 import ru.practice.events.impl.network.SendPacketEvent;
 
 @Mixin(ClientConnection.class)
@@ -21,7 +21,7 @@ public class ClientConnectionMixin {
 
     @Inject(method = "handlePacket", at = @At("HEAD"), cancellable = true)
     private static <T extends PacketListener> void triggerReceivePacketEvent(Packet<T> packet, PacketListener listener, CallbackInfo ci) {
-        RecievePacketEvent event = new RecievePacketEvent(packet);
+        ReceivePacketEvent event = new ReceivePacketEvent(packet);
 
         FabricEvents.getInstance().getEventManager().post(event);
 

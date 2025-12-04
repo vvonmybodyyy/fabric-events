@@ -9,7 +9,7 @@ import ru.practice.events.EventHandler;
 import ru.practice.events.impl.BlockBreakEvent;
 import ru.practice.events.impl.KeyPressEvent;
 import ru.practice.events.impl.TickEvent;
-import ru.practice.events.impl.network.RecievePacketEvent;
+import ru.practice.events.impl.network.ReceivePacketEvent;
 import ru.practice.events.impl.network.SendPacketEvent;
 
 public class Test {
@@ -26,7 +26,7 @@ public class Test {
 
     @EventHandler
     public void onKeyPress(KeyPressEvent event) {
-        System.out.println(GLFW.glfwGetKeyName(event.getKey(), 1) + " action: " + event.getAction());
+        System.out.println(GLFW.glfwGetKeyName(event.getKey(), 0) + " action: " + event.getAction());
     }
 
     @EventHandler
@@ -36,7 +36,7 @@ public class Test {
     }
 
     @EventHandler
-    public void onRecievePacket(RecievePacketEvent event) {
+    public void onReceivePacket(ReceivePacketEvent event) {
         if (event.getPacket() instanceof GameMessageS2CPacket packet)
             System.out.println("recieved message: " + packet.content());
     }

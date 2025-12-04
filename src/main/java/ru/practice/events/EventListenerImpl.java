@@ -16,8 +16,6 @@ public record EventListenerImpl(Object owner, Method method, int priority) imple
     public void invoke(Event event) {
         try {
             method.invoke(owner, event);
-        } catch (IllegalAccessException | InvocationTargetException exception) {
-            throw new RuntimeException(exception);
-        }
+        } catch (Exception ignore) {}
     }
 }
