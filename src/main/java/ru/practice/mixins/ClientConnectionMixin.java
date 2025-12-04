@@ -1,0 +1,53 @@
+package ru.practice.mixins;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.network.ClientConnection;
+import net.minecraft.network.listener.PacketListener;
+import net.minecraft.network.packet.Packet;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.practice.FabricEvents;
+import ru.practice.events.impl.network.RecievePacketEvent;
+import ru.practice.events.impl.network.SendPacketEvent;
+
+@Mixin(ClientConnection.class)
+public class ClientConnectionMixin {
+
+    @Unique
+    private static boolean fix;
+
+    @Inject(method = "handlePacket", at = @At("HEAD"), cancellable = true)
+    private static <T extends PacketListener> void triggerReceivePacketEvent(Packet<T> packet, PacketListener listener, CallbackInfo ci) {
+        RecievePacketEvent event = new RecievePacketEvent(packet);
+
+        FabricEvents.getInstance().getEventManager().post(event);
+
+        if (event.isCancelled()) ci.cancel();
+    }
+
+    @Inject(method = "send(Lnet/minecraft/network/packet/Packet;)V", at = @At("HEAD"), cancellable = true)
+    public void triggerSendPacket(Packet<?> packet, CallbackInfo ci) {
+        SendPacketEvent event = new SendPacketEvent(packet);
+
+        if (fix) return;
+
+        FabricEvents.getInstance().getEventManager().post(event);
+
+        if (event.isCancelled()) ci.cancel();
+
+        Packet<?> newPacket = event.getPacket();
+
+        if (newPacket != packet) {
+            ci.cancel();
+
+            fix = true;
+
+            MinecraftClient.getInstance().getNetworkHandler().sendPacket(newPacket);
+
+            fix = false;
+        }
+    }
+}

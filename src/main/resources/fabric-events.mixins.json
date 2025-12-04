@@ -4,9 +4,12 @@
   "package": "ru.practice.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ClientConnectionMixin"
   ],
   "client": [
     "ClientPlayerEntityMixin",
+    "ClientPlayerInteractionManagerMixin",
+    "KeyboardMixin",
     "MinecraftClientMixin"
   ],
   "injectors": {
