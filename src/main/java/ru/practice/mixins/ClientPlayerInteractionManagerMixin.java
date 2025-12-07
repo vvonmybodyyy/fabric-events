@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.practice.FabricEvents;
 import ru.practice.IMinecraft;
-import ru.practice.events.impl.BlockBreakEvent;
+import ru.practice.events.impl.game.BlockBreakEvent;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin implements IMinecraft {

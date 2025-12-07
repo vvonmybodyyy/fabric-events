@@ -4,7 +4,9 @@
   "package": "ru.practice.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ClientConnectionMixin"
+    "ClientConnectionMixin",
+    "LivingEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
     "ClientPlayerEntityMixin",

@@ -1,14 +1,14 @@
 package ru.practice;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import org.lwjgl.glfw.GLFW;
 import ru.practice.events.EventHandler;
-import ru.practice.events.impl.BlockBreakEvent;
+import ru.practice.events.impl.game.AttackEvent;
+import ru.practice.events.impl.game.BlockBreakEvent;
 import ru.practice.events.impl.KeyPressEvent;
 import ru.practice.events.impl.TickEvent;
+import ru.practice.events.impl.game.BreakTotemEvent;
 import ru.practice.events.impl.network.ReceivePacketEvent;
 import ru.practice.events.impl.network.SendPacketEvent;
 
@@ -39,5 +39,15 @@ public class Test {
     public void onReceivePacket(ReceivePacketEvent event) {
         if (event.getPacket() instanceof GameMessageS2CPacket packet)
             System.out.println("recieved message: " + packet.content());
+    }
+
+    @EventHandler
+    public void onAttackEvent(AttackEvent event) {
+        System.out.println(event.getEntity());
+    }
+
+    @EventHandler
+    public void onBreakTotem(BreakTotemEvent event) {
+        System.out.println(event.getEntity().getName().getString());
     }
 }
