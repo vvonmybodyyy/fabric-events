@@ -16,38 +16,38 @@ public class Test {
 
     @EventHandler
     public void onTick(TickEvent event) {
-        // System.out.println("Tick Event");
-    }
 
-    @EventHandler
-    public void onBreakBlock(BlockBreakEvent event) {
-        System.out.println(event.getBlock() + " breaked on " + event.getBlockPos());
     }
 
     @EventHandler
     public void onKeyPress(KeyPressEvent event) {
-        System.out.println(GLFW.glfwGetKeyName(event.getKey(), 0) + " action: " + event.getAction());
+        FabricEvents.LOGGER.info("key: {} action: {}", GLFW.glfwGetKeyName(event.getKey(), 0), event.getAction());
     }
 
     @EventHandler
     public void onSendPacket(SendPacketEvent event) {
         if (event.getPacket() instanceof ChatMessageC2SPacket packet)
-            System.out.println("sended message: " + packet.chatMessage());
+            FabricEvents.LOGGER.info("sended message: {}", packet.chatMessage());
     }
 
     @EventHandler
     public void onReceivePacket(ReceivePacketEvent event) {
         if (event.getPacket() instanceof GameMessageS2CPacket packet)
-            System.out.println("recieved message: " + packet.content());
+            FabricEvents.LOGGER.info("recieved message: {}", packet.content());
     }
 
     @EventHandler
     public void onAttackEvent(AttackEvent event) {
-        System.out.println(event.getEntity());
+        FabricEvents.LOGGER.info("Attacked: {}", event.getEntity());
+    }
+
+    @EventHandler
+    public void onBreakBlock(BlockBreakEvent event) {
+        FabricEvents.LOGGER.info("{} breaked on {}", event.getBlock(), event.getBlockPos());
     }
 
     @EventHandler
     public void onBreakTotem(BreakTotemEvent event) {
-        System.out.println(event.getEntity().getName().getString());
+        FabricEvents.LOGGER.info("entity: {} stack name: {}", event.getEntity().getName().getString(), event.getStack().getName().getString());
     }
 }

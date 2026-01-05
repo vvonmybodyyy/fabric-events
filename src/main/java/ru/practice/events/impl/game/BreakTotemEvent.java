@@ -3,6 +3,7 @@ package ru.practice.events.impl.game;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import ru.practice.events.Event;
 
 /**
@@ -13,4 +14,5 @@ import ru.practice.events.Event;
 @Getter @RequiredArgsConstructor
 public class BreakTotemEvent extends Event {
     private final LivingEntity entity;
+    private final ItemStack stack;
 }

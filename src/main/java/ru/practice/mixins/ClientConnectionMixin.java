@@ -10,11 +10,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.practice.FabricEvents;
+import ru.practice.IMinecraft;
 import ru.practice.events.impl.network.ReceivePacketEvent;
 import ru.practice.events.impl.network.SendPacketEvent;
 
 @Mixin(ClientConnection.class)
-public class ClientConnectionMixin {
+public class ClientConnectionMixin implements IMinecraft {
 
     @Unique
     private static boolean fix;
@@ -30,6 +31,8 @@ public class ClientConnectionMixin {
 
     @Inject(method = "send(Lnet/minecraft/network/packet/Packet;)V", at = @At("HEAD"), cancellable = true)
     public void triggerSendPacket(Packet<?> packet, CallbackInfo ci) {
+        if (mc.player == null) return;
+
         SendPacketEvent event = new SendPacketEvent(packet);
 
         if (fix) return;
@@ -45,7 +48,7 @@ public class ClientConnectionMixin {
 
             fix = true;
 
-            MinecraftClient.getInstance().getNetworkHandler().sendPacket(newPacket);
+            mc.player.networkHandler.sendPacket(newPacket);
 
             fix = false;
         }
